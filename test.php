@@ -7,9 +7,12 @@ use components\workers\CarWorker;
 
 $car = new Car();
 try {
-    $car->setId('car_5cfffdbf1cf359.60809174')
+    $car->setUniqId()
         ->setStatus('Снят с продажи')
-        ->setPrice(100000);
+        ->setPrice(100000)
+        ->setBrand('Lexus')
+        ->setRun('30000')
+        ->setModel('Big one');
     
 }
 catch (CarAttributeException $exception) {
@@ -19,6 +22,8 @@ catch (CarAttributeException $exception) {
 $record = new CarWorker();
 
 print '<pre>';
-$result = $record->connect()->delete($car);
+$result = $record->connect()->put($car);
+
+var_dump($result);
 
 

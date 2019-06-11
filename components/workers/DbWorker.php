@@ -7,7 +7,7 @@ use \ReflectionClass;
 use \PDO;
 use \PDOException;
 
-require_once $_SERVER['DOCUMENT_ROOT'] ."/constants.php";
+require_once $_SERVER['DOCUMENT_ROOT'] ."kodix/constants.php";
 
 /**
  * Abstract Class DbRecord

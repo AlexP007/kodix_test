@@ -6,7 +6,7 @@ use components\entities\Car;
 use \PDO;
 use \PDOException;
 
-require_once $_SERVER['DOCUMENT_ROOT'] ."/constants.php";
+require_once $_SERVER['DOCUMENT_ROOT'] ."kodix/constants.php";
 
 /**
  * Class CarRecord
@@ -46,6 +46,10 @@ class CarWorker extends DbWorker
         $query = "INSERT INTO {$this->getTableName()} VALUES(:id, :brand, :model, :price, :status, :run)";
         
         $stmt = $this->PDO->prepare($query);
+        
+        if ($this->find($car) ) {
+            return false;
+        }
         try {
             $stmt->execute(
                 [
