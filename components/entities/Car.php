@@ -3,6 +3,7 @@
 namespace components\entities;
 
 use components\exceptions\CarAttributeException;
+use \stdClass;
 
 /**
  * Class Car
@@ -22,9 +23,19 @@ class Car
     /**
      * @return Car - экземпляр класса
      */
-    public function setId()
+    public function setUniqId()
     {
         $this->id = uniqid('car_', true);
+        return $this;
+    }
+    
+    /**
+     * @param string $id
+     * @return $this
+     */
+    public function setId(string $id)
+    {
+        $this->id = $id;
         return $this;
     }
     
@@ -89,5 +100,74 @@ class Car
         }
         $this->run = $run;
         return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getModel()
+    {
+        return $this->model;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getRun()
+    {
+        return $this->run;
+    }
+    
+    /**
+     * Фабрика
+     *
+     * @param stdClass $result
+     * @return Car
+     * @throws CarAttributeException
+     */
+    public static function createFromDb(stdClass $result): Car
+    {
+        $car = new Car();
+        
+        $car->setId($result->car_id)
+            ->setBrand($result->brand)
+            ->setModel($result->model)
+            ->setPrice($result->price)
+            ->setStatus($result->status)
+            ->setRun($result->run);
+        
+        return $car;
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace components\records;
+namespace components\workers;
 
+use components\entities\Car;
 use \ReflectionClass;
 use \PDO;
 use \PDOException;
@@ -11,16 +12,16 @@ require_once $_SERVER['DOCUMENT_ROOT'] ."/constants.php";
 /**
  * Abstract Class DbRecord
  */
-abstract class DbRecord
+abstract class DbWorker
 {
     protected $dbName;
     protected $tableName;
-    protected $db;
+    protected $PDO;
     
     public function __construct()
     {
         $tableName = (new ReflectionClass($this))->getShortName();
-        $tableName = str_replace('Record', '', $tableName);
+        $tableName = str_replace('Worker', '', $tableName);
         $this->setDbName(DB_NAME)
              ->setTableName($tableName);
     }
@@ -61,14 +62,23 @@ abstract class DbRecord
         return $this->tableName;
     }
     
+    /**
+     * @return $this
+     */
     public function connect()
     {
         $dsn = DB_TYPE . ":dbname={$this->getDbName()};host=" . DB_HOST;
         try {
-            $this->db = new PDO($dsn, DB_USER, DB_PASSWORD);
+            $this->PDO = new PDO($dsn, DB_USER, DB_PASSWORD);
         }
         catch (PDOException $exception) {
             print 'не удалось подключиться к базе';
         }
+        return $this;
     }
+    
+    abstract public function find(Car $car);
+    abstract public function put(Car $car);
+    abstract public function update(Car $car);
+    abstract public function delete(Car $car);
 }
