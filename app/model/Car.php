@@ -3,6 +3,7 @@
 namespace app\model;
 
 use component\exception\CarAttributeException;
+use component\exception\CarIdException;
 use \stdClass;
 
 /**
@@ -36,7 +37,7 @@ class Car
     public function setId(string $id)
     {
         if (strlen($id) > 27) {
-            throw new CarAttributeException('id не может быть длиннее 27 символов');
+            throw new CarIdException('Invalid id');
         }
         $this->id = $id;
         return $this;

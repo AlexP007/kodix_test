@@ -5,12 +5,12 @@ use \Exception;
 use Throwable;
 
 /**
- * Class CarAttributeException
+ * Class CarIdException
  *
- * исключеиние - ошибка назначения аттрибута
+ * исключеиние - ошибкаid
  * экземпляру Car
  */
-class CarAttributeException extends Exception
+class CarIdException extends Exception
 {
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {

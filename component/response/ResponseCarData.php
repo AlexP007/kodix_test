@@ -8,7 +8,7 @@ use app\model\Car;
 
 class ResponseCarData extends ResponseBasic
 {
-    public $type = 'car';
+    public $type = 'cars';
     public $id;
     public $brand;
     public $model;

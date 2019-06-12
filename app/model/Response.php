@@ -38,10 +38,10 @@ class Response
     }
     
     /**
-     * @param ResponseCarData $data
+     * @param mixed $data
      * @return $this
      */
-    public function addData(ResponseCarData $data)
+    public function addData($data)
     {
         $this->data[] = $data;
         return $this;

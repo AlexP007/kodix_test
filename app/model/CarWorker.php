@@ -3,35 +3,54 @@
 namespace app\model;
 
 use \PDO;
-use \PDOException;
 use component\worker\DbWorker;
+use app\model\Car;
+use component\response\ResponseCarData;
+use component\exception\CarIdException;
 
 /**
  * Class CarRecord
  */
 class CarWorker extends DbWorker
 {
+    
     /**
-     * @param Car $car
-     * @return $this
+     * @param \app\model\Car|null $car
+     * @return \app\model\Car | array 
+     * @throws \component\exception\CarIdException
      */
-    public function get(Car $car)
+    public function get(Car $car = null)
     {
-        $query = "SELECT * FROM {$this->getTableName()} WHERE car_id=:id";
-        $stmt = $this->PDO->prepare($query);
-        $stmt->execute(
-            [
-                ':id' => $car->getId()
-            ]
-        );
-
-        $result = $stmt->fetch(PDO::FETCH_OBJ);
-        return $result;
+        if (!$car) {
+            $query = "SELECT * FROM {$this->getTableName()}";
+            $stmt = $this->PDO->query($query);
+    
+            $result = [];
+            
+            while ($exec = $stmt->fetch(PDO::FETCH_OBJ) ) {
+                $result[] = new ResponseCarData(Car::createFromDb($exec) );
+            }
+            return $result;
+        } else {
+            $query = "SELECT * FROM {$this->getTableName()} WHERE car_id=:id";
+            $stmt = $this->PDO->prepare($query);
+            $stmt->execute(
+                [
+                    ':id' => $car->getId()
+                ]
+            );
+    
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+            if (!$result) {
+                throw new CarIdException('Id does\'t match any data');
+            }
+            return new ResponseCarData(Car::createFromDb($result) );
+        }
         
     }
     
     /**
-     * @param Car $car
+     * @param \app\model\Car $car
      * @return bool
      */
     public function post(Car $car)
