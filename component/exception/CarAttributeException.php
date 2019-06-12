@@ -1,6 +1,6 @@
 <?php
 
-namespace components\exceptions;
+namespace component\exception;
 use \Exception;
 use Throwable;
 

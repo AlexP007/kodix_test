@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-use components\exceptions\CarAttributeException;
+use component\exception\CarAttributeException;
 use \stdClass;
 
 /**
