@@ -67,10 +67,14 @@ class Response
         return $this;
     }
     
+    /**
+     * формирует объект ответа
+     *
+     * @return $this
+     */
     public function createResponse()
     {
         if ($this->meta) {
-            print count($this->meta);
             $this->responseData['meta'] = $this->meta;
         }
         if ($this->success) {
@@ -82,6 +86,9 @@ class Response
         return $this;
     }
     
+    /**
+     * Отправляет необходимые заголовки и ответ
+     */
     public function send()
     {
         header('Content-Type: application/vnd.api+json;charset=utf-8');
