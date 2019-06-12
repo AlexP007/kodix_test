@@ -87,11 +87,11 @@ class Response
     }
     
     /**
-     * Отправляет необходимые заголовки и ответ
+     * отправляет необходимые заголовки и ответ
      */
     public function send()
     {
-        header('Content-Type: application/vnd.api+json;charset=utf-8');
+        header('Content-Type: application/vnd.api+json');
         header('Cache-control: no-cache, no-store');
         header("Cache-Control: max-age=0");
         http_response_code($this->httpStatusCode);

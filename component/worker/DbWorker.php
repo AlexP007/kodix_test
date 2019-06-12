@@ -65,7 +65,7 @@ abstract class DbWorker
      */
     public function connect()
     {
-        $dsn = DB_TYPE . ":dbname={$this->getDbName()};host=" . DB_HOST;
+        $dsn = DB_TYPE . ":dbname={$this->getDbName()};host=" . DB_HOST . ";charset=utf8";
         try {
             $this->PDO = new PDO($dsn, DB_USER, DB_PASSWORD);
         }

@@ -14,8 +14,8 @@ class Car
      * аттрибуты экзмепляра
      */
     protected $id;
-    protected $brand;
-    protected $model;
+    protected $brand = 'неизвестно';
+    protected $model = 'неизвестно';
     protected $price;
     protected $status;
     protected $run;
@@ -84,7 +84,8 @@ class Car
      */
     public function setStatus(string $status)
     {
-        if (!in_array($status, ['В пути', 'На складе', 'Продан', 'Снят с продажи']) ) {
+        $status = mb_strtolower($status);
+        if (!in_array($status, ['в пути', 'на складе', 'продан', 'снят с продажи']) ) {
             throw new CarAttributeException('статус должен быть: (В пути, На складе, Продан, Снят с продажи)');
         }
         $this->status = $status;

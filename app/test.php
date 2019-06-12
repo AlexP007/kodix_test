@@ -11,12 +11,12 @@ use component\response\ResponseCarData;
 
 $car = new Car();
 try {
-    $car->setId('car_5cfff332ce9554.59013663')
-        ->setStatus('Снят с продажи')
-        ->setPrice(100000)
-        ->setBrand('Lexus')
-        ->setRun('30000')
-        ->setModel('Big one');
+    $car->setUniqId()
+        ->setStatus('Снят с ПРодажи')
+        ->setPrice(102000)
+        ->setBrand('Mersedes')
+        ->setRun('20000')
+        ->setModel('s300');
     
 }
 catch (CarAttributeException $exception) {
@@ -26,7 +26,7 @@ catch (CarAttributeException $exception) {
 $record = new CarWorker();
 
 print '<pre>';
-$result = $record->connect()->get($car);
+$result = $record->connect()->post($car);
 
 $error = new ResponseError(
     [
@@ -42,15 +42,15 @@ $error = new ResponseError(
 //print json_encode(Car::createFromDb($result));
 //print json_encode($error);
 
-$data = new ResponseCarData(Car::createFromDb($result));
+//$data = new ResponseCarData(Car::createFromDb($result));
 
 //var_dump($data);
 //print_r(Car::createFromDb($result));
 //print_r($data);
 
-$response = new \app\model\Response();
-
-$response->addData($data)->createResponse()->send();
+//$response = new \app\model\Response();
+//
+//$response->addData($data)->createResponse()->send();
 
 
 
