@@ -13,25 +13,20 @@ class CarWorker extends DbWorker
 {
     /**
      * @param Car $car
-     * @return object
+     * @return $this
      */
     public function get(Car $car)
     {
         $query = "SELECT * FROM {$this->getTableName()} WHERE car_id=:id";
         $stmt = $this->PDO->prepare($query);
-        try {
-            $stmt->execute(
-                [
-                    ':id' => $car->getId()
-                ]
-            );
-    
-            $result = $stmt->fetch(PDO::FETCH_OBJ);
-            return $result;
-        }
-        catch (PDOException $exception) {
-            print "не удалось выполнить запрос";
-        }
+        $stmt->execute(
+            [
+                ':id' => $car->getId()
+            ]
+        );
+
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
+        return $result;
         
     }
     
@@ -45,26 +40,20 @@ class CarWorker extends DbWorker
         
         $stmt = $this->PDO->prepare($query);
         
-        if ($this->cet($car) ) {
+        if ($this->get($car) ) {
             return false;
         }
-        try {
-            $stmt->execute(
-                [
-                    ':id' => $car->getId(),
-                    ':brand' => $car->getBrand(),
-                    ':model' => $car->getModel(),
-                    ':price' => $car->getPrice(),
-                    ':status' => $car->getStatus(),
-                    ':run' => $car->getRun(),
-                ]
-            );
-            return true;
-        }
-        catch (PDOException $exception) {
-            print "не удалось выполнить запрос";
-            
-        }
+        $stmt->execute(
+            [
+                ':id' => $car->getId(),
+                ':brand' => $car->getBrand(),
+                ':model' => $car->getModel(),
+                ':price' => $car->getPrice(),
+                ':status' => $car->getStatus(),
+                ':run' => $car->getRun(),
+            ]
+        );
+        return true;
     }
     
     /**
@@ -93,38 +82,19 @@ class CarWorker extends DbWorker
         $changes = rtrim($changes, ',');
         $query = "UPDATE {$this->getTableName()} SET {$changes} WHERE car_id=:id";
         $stmt = $this->PDO->prepare($query);
-        
-        print $query;
-        print_r($bindParams);
-    
-        try {
-            $stmt->execute($bindParams);
-            return true;
-        }
-        catch (PDOException $exception) {
-            print "не удалось выполнить запрос";
-
-        }
-        
+        $stmt->execute($bindParams);
+        return true;
     }
     
     public function delete(Car $car)
     {
-    
         $query = "DELETE FROM {$this->getTableName()} WHERE car_id=:id";
         $stmt = $this->PDO->prepare($query);
-        try {
-            $stmt->execute(
-                [
-                    ':id' => $car->getId()
-                ]
-            );
-            
-            return true;
-        }
-        catch (PDOException $exception) {
-            print "не удалось выполнить запрос";
-        }
-    
+        $stmt->execute(
+            [
+                ':id' => $car->getId()
+            ]
+        );
+        return true;
     }
 }

@@ -61,7 +61,7 @@ abstract class DbWorker
     }
     
     /**
-     * @return $this
+     * @return $this|bool
      */
     public function connect()
     {
@@ -70,7 +70,7 @@ abstract class DbWorker
             $this->PDO = new PDO($dsn, DB_USER, DB_PASSWORD);
         }
         catch (PDOException $exception) {
-            print 'не удалось подключиться к базе';
+            return false;
         }
         return $this;
     }

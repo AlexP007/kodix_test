@@ -35,6 +35,9 @@ class Car
      */
     public function setId(string $id)
     {
+        if (strlen($id) > 27) {
+            throw new CarAttributeException('id не может быть длиннее 27 символов');
+        }
         $this->id = $id;
         return $this;
     }
