@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . "/../autoload.php";
+require_once "constants.php";
 
 use app\model\Car;
 use components\exceptions\CarAttributeException;

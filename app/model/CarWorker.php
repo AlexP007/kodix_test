@@ -6,8 +6,6 @@ use \PDO;
 use \PDOException;
 use component\worker\DbWorker;
 
-require_once $_SERVER['DOCUMENT_ROOT'] ."kodix/constants.php";
-
 /**
  * Class CarRecord
  */
