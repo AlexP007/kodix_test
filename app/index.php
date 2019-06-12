@@ -31,23 +31,23 @@ try {
             ->send();
         die();
     }
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        if ($router->getType() !== 'car') {
-            $response->setSuccess(false)
-                ->setHttpStatusCode(422)
-                ->addError(
-                    new ResponseError(
-                        [
-                            'status' => 422,
-                            'source' => ['pointer' => '/data'],
-                            'detail' => 'Invalid`data` Member at document\'s top level.'
-                        ]
-                    )
+    if ($router->getType() !== 'car') {
+        $response->setSuccess(false)
+            ->setHttpStatusCode(422)
+            ->addError(
+                new ResponseError(
+                    [
+                        'status' => 422,
+                        'source' => ['pointer' => '/data'],
+                        'detail' => 'Invalid`data` Member at document\'s top level.'
+                    ]
                 )
-                ->createResponse()
-                ->send();
-        } else {
-            if ($router->getId()) {
+            )
+            ->createResponse()
+            ->send();
+    } else {
+        if ($router->getId()) {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $car->setId($router->getId());
                 $response->setSuccess(true)
                     ->setHttpStatusCode(200)
@@ -56,19 +56,17 @@ try {
                     )
                     ->createResponse()
                     ->send();
-                
-            } else {
-                $response->setSuccess(true)
-                    ->setHttpStatusCode(200)
-                    ->addData(
-                        $record->connect()->get()
-                    )
-                    ->createResponse()
-                    ->send();
             }
+            
+        } else {
+            $response->setSuccess(true)
+                ->setHttpStatusCode(200)
+                ->addData(
+                    $record->connect()->get()
+                )
+                ->createResponse()
+                ->send();
         }
-    }  elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        
     }
 }
 catch (CarIdException $exception) {
