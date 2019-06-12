@@ -1,6 +1,6 @@
 <?php
 
-namespace components\entities;
+namespace app\model;
 
 use components\exceptions\CarAttributeException;
 use \stdClass;

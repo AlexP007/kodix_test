@@ -1,8 +1,8 @@
 <?php
 
-namespace components\workers;
+namespace component\worker;
 
-use components\entities\Car;
+use app\model\Car;
 use \ReflectionClass;
 use \PDO;
 use \PDOException;
@@ -77,8 +77,8 @@ abstract class DbWorker
         return $this;
     }
     
-    abstract public function find(Car $car);
-    abstract public function put(Car $car);
-    abstract public function update(Car $car);
+    abstract public function get(Car $car);
+    abstract public function post(Car $car);
+    abstract public function patch(Car $car);
     abstract public function delete(Car $car);
 }

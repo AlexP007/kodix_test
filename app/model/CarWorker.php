@@ -1,10 +1,10 @@
 <?php
 
-namespace components\workers;
+namespace app\model;
 
-use components\entities\Car;
 use \PDO;
 use \PDOException;
+use component\worker\DbWorker;
 
 require_once $_SERVER['DOCUMENT_ROOT'] ."kodix/constants.php";
 
@@ -17,7 +17,7 @@ class CarWorker extends DbWorker
      * @param Car $car
      * @return object
      */
-    public function find(Car $car)
+    public function get(Car $car)
     {
         $query = "SELECT * FROM {$this->getTableName()} WHERE car_id=:id";
         $stmt = $this->PDO->prepare($query);
@@ -41,13 +41,13 @@ class CarWorker extends DbWorker
      * @param Car $car
      * @return bool
      */
-    public function put(Car $car)
+    public function post(Car $car)
     {
         $query = "INSERT INTO {$this->getTableName()} VALUES(:id, :brand, :model, :price, :status, :run)";
         
         $stmt = $this->PDO->prepare($query);
         
-        if ($this->find($car) ) {
+        if ($this->cet($car) ) {
             return false;
         }
         try {
@@ -73,7 +73,7 @@ class CarWorker extends DbWorker
      * @param Car $car
      * @return bool
      */
-    public function update(Car $car)
+    public function patch(Car $car)
     {
         $attr = [
             'brand' => $car->getBrand(),
