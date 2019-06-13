@@ -218,6 +218,9 @@ class ApiController
         }
     }
     
+    /**
+     * Изменяет объект в бд
+     */
     public function patch($data)
     {
         
@@ -245,7 +248,7 @@ class ApiController
     {
         if ($this->record->connect()->delete($this->car->setId($id)) ) {
             $this->response->setSuccess(true)
-                ->setHttpStatusCode(200)
+                ->setHttpStatusCode(202)
                 ->send();
         } else {
             $this->response->setSuccess(false)

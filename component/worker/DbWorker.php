@@ -21,7 +21,7 @@ abstract class DbWorker
         $tableName = (new ReflectionClass($this))->getShortName();
         $tableName = str_replace('Worker', '', $tableName);
         $this->setDbName(DB_NAME)
-             ->setTableName($tableName);
+             ->setTableName(mb_strtolower($tableName));
     }
     
     /**
