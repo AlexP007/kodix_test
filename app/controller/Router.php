@@ -13,6 +13,11 @@ class Router
              ->setId();
     }
     
+    /**
+     * Парсит корневой элемент запроса
+     *
+     * @return $this
+     */
     public function setType()
     {
         $type = isset($_GET['type']) ? $_GET['type'] : null;
@@ -20,6 +25,11 @@ class Router
         return $this;
     }
     
+    /**
+     * Парсит id
+     *
+     * @return $this
+     */
     public function setId()
     {
         $id = isset($_GET['id']) ? $_GET['id'] : null;
