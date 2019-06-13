@@ -113,6 +113,27 @@ class ApiController
             ->send();
     }
     
+    public function deleteById($id)
+    {
+        if ($this->record->connect()->delete($this->car->setId($id)) ) {
+            $this->response->setSuccess(true)
+                ->setHttpStatusCode(200)
+                ->send();
+        } else {
+            $this->response->setSuccess(false)
+                ->setHttpStatusCode(404)
+                ->addError(
+                    new ResponseError(
+                        [
+                            'status' => 404,
+                        ]
+                    )
+                )
+                ->createResponse()
+                ->send();
+        }
+    }
+    
     /**
      * Отправляет ошибку
      * сервера

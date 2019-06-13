@@ -95,7 +95,9 @@ class Response
         header('Cache-control: no-cache, no-store');
         header("Cache-Control: max-age=0");
         http_response_code($this->httpStatusCode);
-        print json_encode($this->responseData, JSON_UNESCAPED_UNICODE);
+        if (count($this->responseData)) {
+            print json_encode($this->responseData, JSON_UNESCAPED_UNICODE);
+        }
 
     }
 }

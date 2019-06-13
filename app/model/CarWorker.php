@@ -105,15 +105,24 @@ class CarWorker extends DbWorker
         return true;
     }
     
+    /**
+     * @param \app\model\Car $car
+     * @return bool
+     * @throws CarIdException
+     */
     public function delete(Car $car)
     {
-        $query = "DELETE FROM {$this->getTableName()} WHERE car_id=:id";
-        $stmt = $this->PDO->prepare($query);
-        $stmt->execute(
-            [
-                ':id' => $car->getId()
-            ]
-        );
-        return true;
+        if ($this->get($car) ) {
+            $query = "DELETE FROM {$this->getTableName()} WHERE car_id=:id";
+            $stmt = $this->PDO->prepare($query);
+            $stmt->execute(
+                [
+                    ':id' => $car->getId()
+                ]
+            );
+            return true;
+        } else {
+            return false;
+        }
     }
 }

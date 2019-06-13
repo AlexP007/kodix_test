@@ -22,6 +22,9 @@ try {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $controller->getById($router->getId());
                 die();
+            } elseif ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+                $controller->deleteById($router->getId());
+                die();
             }
         } else {
             $controller->getAll();
