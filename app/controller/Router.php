@@ -22,6 +22,8 @@ class Router
     {
         $type = isset($_GET['type']) ? $_GET['type'] : null;
         $this->type = filter_var($type, FILTER_SANITIZE_MAGIC_QUOTES);
+        print $type;
+        print '<br>';
         return $this;
     }
     

@@ -113,6 +113,9 @@ class ApiController
             ->send();
     }
     
+    /**
+     * Удаляет объект в бд
+     */
     public function deleteById($id)
     {
         if ($this->record->connect()->delete($this->car->setId($id)) ) {
