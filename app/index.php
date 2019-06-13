@@ -35,12 +35,12 @@ try {
     } elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
         if ($router->checkType() ) {
             $json = $router->getPost();
-            if(!property_exists($json, 'id') ) {
-                $json->data->id = $router->getId();
-            }
             if (!$json) {
                 $controller->jsonError();
                 die();
+            }
+            if($router->getId() && !property_exists($json, 'id') ) {
+                $json->data->id = $router->getId();
             }
             if (!isset($json->data) ) {
                 $controller->jsonError();
