@@ -59,9 +59,6 @@ class CarWorker extends DbWorker
         
         $stmt = $this->PDO->prepare($query);
         
-        if ($this->get($car) ) {
-            return false;
-        }
         $stmt->execute(
             [
                 ':id' => $car->getId(),

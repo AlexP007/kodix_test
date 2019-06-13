@@ -71,7 +71,7 @@ class Car
      */
     public function setPrice(int $price)
     {
-        if ($price <0) {
+        if ($price < 0) {
             throw new CarAttributeException('цена не может быть меньше нуля');
         }
         $this->price = $price;

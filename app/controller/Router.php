@@ -2,6 +2,8 @@
 
 namespace app\controller;
 
+use component\exception\TypeException;
+
 class Router
 {
     protected $type;
@@ -22,8 +24,7 @@ class Router
     {
         $type = isset($_GET['type']) ? $_GET['type'] : null;
         $this->type = filter_var($type, FILTER_SANITIZE_MAGIC_QUOTES);
-        print $type;
-        print '<br>';
+
         return $this;
     }
     
@@ -39,6 +40,34 @@ class Router
         return $this;
     }
     
+    /**
+     * Проверяем на:
+     * Content-Type: application/vnd.api+json
+     * Accept: application/vnd.api+json
+     */
+    public function checkType()
+    {
+        if ($_SERVER['CONTENT_TYPE'] !== 'application/vnd.api+json') {
+            throw new TypeException('Invalid content-type');
+        }
+        if ($_SERVER['HTTP_ACCEPT'] !== 'application/vnd.api+json') {
+            throw new TypeException('Invalid accept header');
+        }
+        return true;
+    }
+    
+    public function getPost()
+    {
+        $raw = file_get_contents('php://input');
+        $json = json_decode(
+            filter_var(
+                $raw,
+                FILTER_SANITIZE_STRING,
+                FILTER_FLAG_NO_ENCODE_QUOTES
+            )
+        );
+        return $json;
+    }
     public function getType()
     {
         return $this->type;

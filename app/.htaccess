@@ -4,4 +4,4 @@ RewriteCond %{REQUEST_FILENAME}% !-d
 RewriteCond %{REQUEST_FILENAME}% !-f
 
 RewriteRule ^(\w*)/(.*)$ index.php?type=$1&id=$2 [L]
-RewriteRule ^(\w*)$ index.php?type=$1 [L]
+RewriteRule ^(\w*)$ index.php?type=$1 [QSA,L]

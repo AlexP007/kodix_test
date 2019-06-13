@@ -114,6 +114,131 @@ class ApiController
     }
     
     /**
+     * Отправляет ошибку
+     * о неверных заголовках
+     */
+    public function typeError($exception)
+    {
+        $this->response->setSuccess(false)
+            ->setHttpStatusCode(400)
+            ->addError(
+                new ResponseError(
+                    [
+                        'status' => 400,
+                        'detail' => $exception->getMessage()
+                    ]
+                )
+            )
+            ->createResponse()
+            ->send();
+    }
+    
+    /**
+     * Отправляет ошибку
+     * о неверном формате json
+     */
+    public function jsonError()
+    {
+        $this->response->setSuccess(false)
+            ->setHttpStatusCode(400)
+            ->addError(
+                new ResponseError(
+                    [
+                        'status' => 400,
+                        'detail' => 'Неверный формат JSON'
+                    ]
+                )
+            )
+            ->createResponse()
+            ->send();
+    }
+    
+    /**
+     * Отправляет ошибку
+     * о значении аттрибута
+     */
+    public function attrError($exception)
+    {
+        $this->response->setSuccess(false)
+            ->setHttpStatusCode(400)
+            ->addError(
+                new ResponseError(
+                    [
+                        'status' => 400,
+                        'detail' => $exception->getMessage()
+                    ]
+                )
+            )
+            ->createResponse()
+            ->send();
+    }
+    
+    /**
+     * Добавляет объект в бд
+     */
+    public function post($data)
+    {
+        if (
+            $data->brand
+            && $data->model
+            && $data->price
+            && $data->status
+            && $data->run
+        ) {
+    
+            $this->car
+                ->setUniqId()
+                ->setBrand($data->brand)
+                ->setModel($data->model)
+                ->setPrice($data->price)
+                ->setStatus($data->status)
+                ->setRun($data->run);
+    
+            $this->record->connect()->post($this->car);
+            $this->response->setSuccess(true)
+                ->setHttpStatusCode(201)
+                ->addData(
+                    $this->record->connect()->get($this->car)
+                )
+                ->createResponse()
+                ->send();
+        } else {
+            $this->response->setSuccess(false)
+                ->setHttpStatusCode(400)
+                ->addError(
+                    new ResponseError(
+                        [
+                            'status' => 400,
+                            'detail' => 'Неправильное значение data'
+                        ]
+                    )
+                )
+                ->createResponse()
+                ->send();
+        }
+    }
+    
+    public function patch($data)
+    {
+        
+        $vars = get_object_vars($data);
+        foreach ($vars as $key => $value) {
+            $method = "set" . $key;
+            $this->car->$method($value);
+        }
+        if ($this->record->connect()->get($this->car) ) {
+            $this->record->patch($this->car);
+            $this->response->setSuccess(true)
+                ->setHttpStatusCode(202)
+                ->addData(
+                    $this->record->get($this->car)
+                )
+                ->createResponse()
+                ->send();
+        };
+    }
+    
+    /**
      * Удаляет объект в бд
      */
     public function deleteById($id)
