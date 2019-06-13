@@ -10,6 +10,7 @@ Implementation of kodix test task
 
 - caching
 - pagination
+- relationships
 - location
 - auth token
 
