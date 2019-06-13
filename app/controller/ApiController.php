@@ -38,7 +38,6 @@ class ApiController
                 )
             )->createResponse()
             ->send();
-        die();
     }
     
     /**
