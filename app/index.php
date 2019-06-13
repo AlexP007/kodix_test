@@ -32,9 +32,12 @@ try {
              $controller->post($json->data);
              die();
         }
-    }elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
         if ($router->checkType() ) {
             $json = $router->getPost();
+            if(!property_exists($json, 'id') ) {
+                $json->data->id = $router->getId();
+            }
             if (!$json) {
                 $controller->jsonError();
                 die();
